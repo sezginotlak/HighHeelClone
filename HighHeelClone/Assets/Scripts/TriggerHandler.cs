@@ -10,6 +10,7 @@ public class TriggerHandler : MonoBehaviour
         {
             other.gameObject.GetComponent<BoxCollider>().enabled = false;
             Destroy(gameObject, 0.6f);
+
             Debug.Log("Triggered!");
         }
     }
