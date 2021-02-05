@@ -5,55 +5,78 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public Rigidbody rigidbody;
-    public Transform leftFoots;
-    public Transform rightFoots;
-    public Transform left;
-    public Transform right;
-    Vector3 newPosition;
-    Vector3 leftPosition;
-    Vector3 rightPosition;
+    private Touch touch;
+    private float speedModifier;
     
     // Start is called before the first frame update
     void Start()
     {
-        newPosition = transform.position;
-        CreateFoots();
-    }
-
-    private void CreateFoots()
-    {
-        leftPosition = new Vector3(leftFoots.position.x, leftFoots.position.y - 0.125f, leftFoots.position.z);
-        rightPosition = new Vector3(rightFoots.position.x, rightFoots.position.y - 0.125f, rightFoots.position.z);
-
-        Instantiate(left, leftPosition, Quaternion.identity, leftFoots);
-        Instantiate(right, rightPosition, Quaternion.identity, rightFoots);
-
-        leftPosition = new Vector3(leftFoots.position.x, leftFoots.position.y - 0.375f, leftFoots.position.z);
-        rightPosition = new Vector3(rightFoots.position.x, rightFoots.position.y - 0.375f, rightFoots.position.z);
-        Instantiate(left, leftPosition, Quaternion.identity, leftFoots);
-        Instantiate(right, rightPosition, Quaternion.identity, rightFoots);
-
-        leftPosition = new Vector3(leftFoots.position.x, leftFoots.position.y - 0.625f, leftFoots.position.z);
-        rightPosition = new Vector3(rightFoots.position.x, rightFoots.position.y - 0.625f, rightFoots.position.z);
-        Instantiate(left, leftPosition, Quaternion.identity, leftFoots);
-        Instantiate(right, rightPosition, Quaternion.identity, rightFoots);
+        speedModifier = 0.01f;
     }
 
     // Update is called once per frame
     void Update()
     {
-        Move();
-        //Debug.Log(gameObject.transform.Find("LeftFoots").transform.GetChild(2));
-        FootRotation();
+        //AdjustVerticalPosition();
+        if (Input.touchCount > 0)
+        {
+            DragControl();
+            FootRotation();
+        }
+        else
+        {
+            Move();
+            FootRotation();
+        }
+    }
+
+    private void AdjustVerticalPosition()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(new Vector3(transform.position.x - 0.25f, transform.position.y + 1f, transform.position.z), -Vector3.up, out hit))
+        {
+            if (hit.transform.tag == "Ground")
+            {
+                if (transform.Find("LeftFoots").childCount == 0)
+                {
+                    transform.position = new Vector3(transform.position.x, 0.75f, transform.position.z);
+                }
+                else
+                {
+                    transform.position = new Vector3(transform.position.x, 0.75f + 0.25f * transform.Find("LeftFoots").childCount, transform.position.z);
+                }
+            }
+        }
+    }
+
+    private void DragControl()
+    {
+        touch = Input.GetTouch(0);
+
+        if (touch.phase == TouchPhase.Moved)
+        {
+            transform.position = new Vector3(transform.position.x - 0.02f, transform.position.y, transform.position.z + touch.deltaPosition.y * speedModifier);
+        }else if(touch.phase == TouchPhase.Stationary)
+        {
+            transform.position = new Vector3(transform.position.x - 0.02f, transform.position.y, transform.position.z);
+        }
     }
 
     private void FootRotation()
     {
         RaycastHit hit;
-        if (Physics.Raycast(new Vector3(transform.position.x - 0.15f, transform.position.y + 0.5f, transform.position.z), -Vector3.up, out hit))
+        if (Physics.Raycast(new Vector3(transform.position.x - 0.25f, transform.position.y + 1f, transform.position.z), -Vector3.up, out hit))
         {
             if (hit.transform.tag == "Ground")
             {
+                if (transform.Find("LeftFoots").childCount == 0)
+                {
+                    transform.position = new Vector3(transform.position.x, 0.75f, transform.position.z);
+                }
+                else
+                {
+                    transform.position = new Vector3(transform.position.x, 0.75f + 0.25f * transform.Find("LeftFoots").childCount, transform.position.z);
+                }
                 transform.Find("LeftFoots").GetComponent<Transform>().rotation = Quaternion.Euler(0, 0, 0);
                 transform.Find("RightFoots").GetComponent<Transform>().rotation = Quaternion.Euler(0, 0, 0);
             }
@@ -67,7 +90,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Move()
     {
-        newPosition = new Vector3(newPosition.x - 0.005f, transform.position.y, transform.position.z);
-        rigidbody.MovePosition(newPosition);
+        transform.position = new Vector3(transform.position.x - 0.02f, transform.position.y, transform.position.z);
     }
+
 }

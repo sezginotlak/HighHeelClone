@@ -25,13 +25,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.87, y: -0.7, z: -8.4}
+  m_LocalRotation: {x: -0.13245752, y: 0.6945898, z: -0.13245755, w: -0.6945898}
+  m_LocalPosition: {x: 8.280001, y: 7.08, z: -0.05}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children: []
   m_Father: {fileID: 6297593171138962379}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 21.593, y: 270, z: 0}
 --- !u!20 &963194227
 Camera:
   m_ObjectHideFlags: 0
@@ -97,6 +97,7 @@ GameObject:
   - component: {fileID: 1545073713182624023}
   - component: {fileID: 467794321}
   - component: {fileID: 467794322}
+  - component: {fileID: 1993652906}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -180,8 +181,8 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.55
-  m_Height: 2.25
+  m_Radius: 0.5
+  m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
 --- !u!114 &467794321
@@ -197,10 +198,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rigidbody: {fileID: 467794322}
-  leftFoots: {fileID: 7664653495422892805}
-  rightFoots: {fileID: 7867910134847171992}
-  left: {fileID: 6704214794126929037, guid: 876a8d820a1694d4abcf229246d18281, type: 3}
-  right: {fileID: 1945116714221372696, guid: 6a8e3d2383f0fa84d9d1ce4dd1d33dd0, type: 3}
 --- !u!54 &467794322
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -217,6 +214,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!65 &1993652906
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7901171955945026897}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Size: {x: 1.0000001, y: 2, z: 1.0000002}
+  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
 --- !u!1001 &832033863900333558
 PrefabInstance:
   m_ObjectHideFlags: 0
