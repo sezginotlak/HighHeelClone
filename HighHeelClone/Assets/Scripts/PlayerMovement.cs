@@ -38,17 +38,17 @@ public class PlayerMovement : MonoBehaviour
 
         if (touch.phase == TouchPhase.Moved)
         {
-            transform.position = new Vector3(transform.position.x - 0.02f, transform.position.y, transform.position.z + touch.deltaPosition.y * speedModifier);
+            transform.position = new Vector3(transform.position.x - 0.05f, transform.position.y, transform.position.z + touch.deltaPosition.y * speedModifier);
         }else if(touch.phase == TouchPhase.Stationary)
         {
-            transform.position = new Vector3(transform.position.x - 0.02f, transform.position.y, transform.position.z);
+            transform.position = new Vector3(transform.position.x - 0.05f, transform.position.y, transform.position.z);
         }
     }
 
     private void FootRotation()
     {
         RaycastHit hit;
-        if (Physics.Raycast(new Vector3(transform.position.x - 0.2f, transform.position.y + 1f, transform.position.z), -Vector3.up, out hit))
+        if (Physics.Raycast(new Vector3(transform.position.x - 0.5f, transform.position.y + 1f, transform.position.z), -Vector3.up, out hit))
         {
             if (hit.transform.tag == "Ground")
             {
@@ -73,6 +73,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void Move()
     {
-        transform.position = new Vector3(transform.position.x - 0.02f, transform.position.y, transform.position.z);
+        transform.position = new Vector3(transform.position.x - 0.05f, transform.position.y, transform.position.z);
     }
 }
