@@ -6,8 +6,9 @@ public class TriggerHandler : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Obstacle") || other.gameObject.CompareTag("Finish"))
+        if (other.gameObject.CompareTag("Obstacle"))
         {
+            Destroy(other.gameObject);
             int index = transform.GetSiblingIndex();
             other.gameObject.GetComponent<BoxCollider>().enabled = false;
             for (int i = index; i < transform.parent.childCount; i++)

@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Obstacle
   - Ground
+  - Pickup
+  - Bridge
+  - Foot
   layers:
   - Default
   - TransparentFX

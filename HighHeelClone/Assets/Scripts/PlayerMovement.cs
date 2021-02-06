@@ -1,12 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
     public Rigidbody rigidbody;
     private Touch touch;
     private float speedModifier;
+    public bool isGameStarted = false;
     
     // Start is called before the first frame update
     void Start()
@@ -17,38 +16,22 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //AdjustVerticalPosition();
-        if (Input.touchCount > 0)
+        if (Input.touchCount > 0) isGameStarted = true;
+        if (isGameStarted)
         {
-            DragControl();
-            FootRotation();
-        }
-        else
-        {
-            Move();
-            FootRotation();
-        }
-    }
-
-    private void AdjustVerticalPosition()
-    {
-        RaycastHit hit;
-        if (Physics.Raycast(new Vector3(transform.position.x - 0.25f, transform.position.y + 1f, transform.position.z), -Vector3.up, out hit))
-        {
-            if (hit.transform.tag == "Ground")
+            if (Input.touchCount > 0)
             {
-                if (transform.Find("LeftFoots").childCount == 0)
-                {
-                    transform.position = new Vector3(transform.position.x, 0.75f, transform.position.z);
-                }
-                else
-                {
-                    transform.position = new Vector3(transform.position.x, 0.75f + 0.25f * transform.Find("LeftFoots").childCount, transform.position.z);
-                }
+                DragControl();
+                FootRotation();
+            }
+            else
+            {
+                Move();
+                FootRotation();
             }
         }
     }
-
+    
     private void DragControl()
     {
         touch = Input.GetTouch(0);
@@ -65,17 +48,17 @@ public class PlayerMovement : MonoBehaviour
     private void FootRotation()
     {
         RaycastHit hit;
-        if (Physics.Raycast(new Vector3(transform.position.x - 0.25f, transform.position.y + 1f, transform.position.z), -Vector3.up, out hit))
+        if (Physics.Raycast(new Vector3(transform.position.x - 0.2f, transform.position.y + 1f, transform.position.z), -Vector3.up, out hit))
         {
             if (hit.transform.tag == "Ground")
             {
                 if (transform.Find("LeftFoots").childCount == 0)
                 {
-                    transform.position = new Vector3(transform.position.x, 0.75f, transform.position.z);
+                    transform.position = new Vector3(transform.position.x, hit.transform.position.y + 0.75f, transform.position.z);
                 }
                 else
                 {
-                    transform.position = new Vector3(transform.position.x, 0.75f + 0.25f * transform.Find("LeftFoots").childCount, transform.position.z);
+                    transform.position = new Vector3(transform.position.x, hit.transform.position.y + 0.75f + 0.25f * transform.Find("LeftFoots").childCount, transform.position.z);
                 }
                 transform.Find("LeftFoots").GetComponent<Transform>().rotation = Quaternion.Euler(0, 0, 0);
                 transform.Find("RightFoots").GetComponent<Transform>().rotation = Quaternion.Euler(0, 0, 0);
@@ -92,5 +75,4 @@ public class PlayerMovement : MonoBehaviour
     {
         transform.position = new Vector3(transform.position.x - 0.02f, transform.position.y, transform.position.z);
     }
-
 }

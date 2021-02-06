@@ -11,6 +11,12 @@ public class PickupHandler : MonoBehaviour
     Vector3 leftPosition;
     Vector3 rightPosition;
 
+    private void Start()
+    {
+        leftFoots = GameObject.FindGameObjectWithTag("Player").transform.Find("LeftFoots");
+        rightFoots = GameObject.FindGameObjectWithTag("Player").transform.Find("RightFoots");
+    }
+
     private void Update()
     {
         GetPosition();
